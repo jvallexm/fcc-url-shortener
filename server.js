@@ -12,15 +12,6 @@ var mongodb = require('mongodb');
 var MongoClient = mongodb.MongoClient;
 var url = process.env.MONGOLAB;
 
-  MongoClient.connect(url, function (err, db) {
-  if (err) {
-    console.log('Unable to connect to the mongoDB server. Error:', err);
-  } else {
-    console.log('Connection established to', url);
-
-    db.close();
-  }
-});
 
 if (!process.env.DISABLE_XORIGIN) {
   app.use(function(req, res, next) {
@@ -55,8 +46,32 @@ app.use(function(req, res, next){
   
   //expression from https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
   var expression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-  var r  
-  res.send(req.originalUrl);
+  var regex = new RegExp(expression);
+  //above from https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
+  
+  var isUrl = false;
+  if(req.originalUrl.match(regex))
+  {
+    console.log("it's a match!")
+    isUrl = true;
+    
+    MongoClient.connect(url, function (err, db) {
+    if (err) {
+    console.log('Unable to connect to the mongoDB server. Error:', err);
+    } 
+    else {
+    console.log('Connection established to', url);
+      
+    db.close();
+    }
+    });    
+  } 
+  else
+  {
+    console.log("that's not a match :(");
+  }
+ 
+  res.send(isUrl);
 });
 
 // Error Middleware
