@@ -63,18 +63,18 @@ app.use(function(req, res, next){
     console.log('Connection established to', url);
     var shortUrls = db.collection('short-urls');
     var obj=null;
-    shortUrls.find({
-      original_url: longUrl
+    shortUrls.find({},{
+      "original_url": longUrl
     }).toArray(function(err,docs){
       if(err){
                console.log('To Array Error');
                throw err;
              }
-      console.log("dsfasdfadsf");
+      return docs;
     });
    
     console.log("Object: " + obj);
-    if(obj==null)
+    if(obj==false)
     {
       shortUrls.insert({
         oiriginal_url: longUrl,
