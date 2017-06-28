@@ -64,7 +64,7 @@ app.use(function(req, res, next){
     else
     {
       var shortUrls = db.collection('short-urls');
-      
+      console.log("Length: " + shortUrls.length);
       var findOne = function(db,callback)
       {
         shortUrls.findOne({original_url : longUrl},{_id:0},
@@ -73,7 +73,9 @@ app.use(function(req, res, next){
                     if(data!=null)
                       res.send(data);
                     else
-                      res.send("Your super box needs words");
+                    {
+                      
+                    }
                 });
       }
       findOne(db,function(){
@@ -97,3 +99,7 @@ app.listen(process.env.PORT, function () {
   console.log('Node.js listening ...');
 });
 
+function makeShortUrl()
+{
+  
+}
