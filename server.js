@@ -58,24 +58,16 @@ app.use(function(req, res, next){
     var longUrl = req.originalUrl;
     MongoClient.connect(url, function (err, db) {
     if (err) {
-    console.log('Unable to connect to the mongoDB server. Error:', err);
+      console.log('Unable to connect to the mongoDB server. Error:', err);
     } 
     else {
     console.log('Connection established to', url);
-    var shortUrls = db.collection('short-urls');
-    var obj=null;
-    shortUrls.find({},{
+    var shortUrls = db.collection('short-urls').find({},{
       "original_url": longUrl
-    }).toArray(function(err,docs){
-      if(err){
-               console.log('To Array Error');
-               throw err;
-             }
-      console.log(JSON.stringify(docs));
-    });   
-       
+    }).forEach(function(item){return "butts"});
+    console.log(shortUrls);
     }
-    db.close();  
+      
     });    
   } 
   else
