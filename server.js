@@ -54,13 +54,25 @@ app.use(function(req, res, next){
   {
     console.log("it's a match!")
     isUrl = true;
-    
+    var longUrl = req.originalUrl;
     MongoClient.connect(url, function (err, db) {
     if (err) {
     console.log('Unable to connect to the mongoDB server. Error:', err);
     } 
     else {
     console.log('Connection established to', url);
+    var shortUrls = db.collection('short-urls');
+    var obj="";
+    shortUrls.find({
+      original_url: longUrl
+    }).toArray(function(err,docs){
+      if(err){
+               console.log('To Array Error');
+               throw err;
+             }
+      obj=docs;
+    });
+    console.log("Object: " + obj);
       
     db.close();
     }
