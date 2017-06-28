@@ -63,9 +63,23 @@ app.use(function(req, res, next){
      console.log("Error: " + err);
     else
     {
+      var shortUrls = db.collection('short-urls');
+      
+      var findOne = function(db,callback)
+      {
+      shortUrls.findOne({},{"original_url" : longUrl},
+                function(err,data){
+                    console.log(data);
+                    if(data!=null)
+                      res.send(data);
+                    else
+                      res.send("Your super box needs words");
+                });
+      }
+      findOne(db,function(){db.close();});
     }
   });  
-  res.send("Your super box needs words");
+  //res.send("Your super box needs words");
 });
 
 // Error Middleware
