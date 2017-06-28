@@ -50,9 +50,10 @@ app.use(function(req, res, next){
   //above from https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
   
   var isUrl = false;
+  var arr;
   if(req.originalUrl.match(regex))
   {
-    console.log("it's a match!")
+    console.log("it's a valid url!")
     isUrl = true;
     var longUrl = req.originalUrl;
     MongoClient.connect(url, function (err, db) {
@@ -70,36 +71,18 @@ app.use(function(req, res, next){
                console.log('To Array Error');
                throw err;
              }
-      return docs;
-    });
-   
-    console.log("Object: " + obj);
-    if(obj==false)
-    {
-      shortUrls.insert({
-        oiriginal_url: longUrl,
-        short_url: "dsfas"
-      },
-      function(err,data){
-        if(err)
-          console.log(err);
-        else
-          console.log("Great success");
-      });
+      console.log(JSON.stringify(docs));
+    });   
+       
     }
-    else
-    {
-      console.log("It's in there!")
-    }
-    db.close();
-    }
+    db.close();  
     });    
   } 
   else
   {
     console.log("that's not a match :(");
   }
- 
+  console.log("Arr " + arr);
   res.send(isUrl);
 });
 
