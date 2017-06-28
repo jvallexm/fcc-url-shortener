@@ -74,9 +74,16 @@ app.use(function(req, res, next){
                       res.send(data);
                     else
                     {
-                      shortUrls.insert({
-                        
-                      },function)
+                      makeShortUrl();
+                      res.send("Your super box needs words");
+                      
+                     /* shortUrls.insert({
+                        "original_url": longUrl,
+                        "short_url": makeShortUrl()
+                      },function(err,db){
+                        if(err) throw err;
+                      });*/
+
                     }
                 });
       }
@@ -103,5 +110,8 @@ app.listen(process.env.PORT, function () {
 
 function makeShortUrl()
 {
+  var date = new Date();
+  var year = date.getFullYear().toString().split("");
   
+  console.log(year);
 }
