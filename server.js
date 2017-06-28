@@ -62,7 +62,7 @@ app.use(function(req, res, next){
     else {
     console.log('Connection established to', url);
     var shortUrls = db.collection('short-urls');
-    var obj="";
+    var obj=null;
     shortUrls.find({
       original_url: longUrl
     }).toArray(function(err,docs){
@@ -70,10 +70,27 @@ app.use(function(req, res, next){
                console.log('To Array Error');
                throw err;
              }
-      obj=docs;
+      console.log("dsfasdfadsf");
     });
+   
     console.log("Object: " + obj);
-      
+    if(obj==null)
+    {
+      shortUrls.insert({
+        oiriginal_url: longUrl,
+        short_url: "dsfas"
+      },
+      function(err,data){
+        if(err)
+          console.log(err);
+        else
+          console.log("Great success");
+      });
+    }
+    else
+    {
+      console.log("It's in there!")
+    }
     db.close();
     }
     });    
