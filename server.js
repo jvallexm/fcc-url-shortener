@@ -56,26 +56,14 @@ app.use(function(req, res, next){
     console.log("it's a valid url!")
     isUrl = true;
     var longUrl = req.originalUrl;
-    MongoClient.connect(url, function (err, db) {
-    if (err) {
-      console.log('Unable to connect to the mongoDB server. Error:', err);
-    } 
-    else {
-    console.log('Connection established to', url);
-    var shortUrls = db.collection('short-urls').find({},{
-      "original_url": longUrl
-    }).forEach(function(item){return "butts"});
-    console.log(shortUrls);
-    }
-      
-    });    
-  } 
-  else
-  {
-    console.log("that's not a match :(");
+    MongoClient.connect(url,function(err,db){
+      if(err)
+        console.log("Error: ", err);
+      else
+        console.log("Ding! Connected");
+    });  
   }
-  console.log("Arr " + arr);
-  res.send(isUrl);
+  
 });
 
 // Error Middleware
