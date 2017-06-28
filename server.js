@@ -67,7 +67,7 @@ app.use(function(req, res, next){
       
       var findOne = function(db,callback)
       {
-      shortUrls.findOne({},{"original_url" : longUrl},
+        shortUrls.findOne({},{original_url : longUrl},
                 function(err,data){
                     console.log(data);
                     if(data!=null)
@@ -76,7 +76,9 @@ app.use(function(req, res, next){
                       res.send("Your super box needs words");
                 });
       }
-      findOne(db,function(){db.close();});
+      findOne(db,function(){
+        db.close();
+      });
     }
   });  
   //res.send("Your super box needs words");
