@@ -50,10 +50,10 @@ app.use(function(req, res, next){
   //above from https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
   MongoClient.connect(url,function(err,db){
     if(err)
-      console.log("Error: " + err);
+     console.log("Error: " + err);
     else
     {
-      
+
     }
   });  
   
