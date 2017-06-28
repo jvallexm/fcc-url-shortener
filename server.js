@@ -57,28 +57,15 @@ app.use(function(req, res, next){
   }
   var longUrl = req.originalUrl;
   console.log("Url Valid");  
+  //https://battle-wine.glitch.me/http://www.google.com
   MongoClient.connect(url,function(err,db){
     if(err)
      console.log("Error: " + err);
     else
     {
-      var shortUrls = db.collection('short-urls');
-      var isNew = function(db,callback)
-      {
-        shortUrls.findOne({"original_url":longUrl},
-                  function(err,doc)
-                  {
-                    if(doc!=null)
-                      {
-                        res.send(doc);
-                      }
-                    else
-                      res.send("Not found");
-                  });
-      };
-      isNew(db,function(){db.close();});
     }
   });  
+  res.send("Your super box needs words");
 });
 
 // Error Middleware
