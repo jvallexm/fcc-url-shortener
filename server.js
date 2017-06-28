@@ -52,10 +52,10 @@ app.route('/')
     })
 app.use(function(req, res, next){
   console.log(req.originalUrl);
-  //
+  
+  //expression from https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
   var expression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
-  
-  
+  var r  
   res.send(req.originalUrl);
 });
 
