@@ -48,21 +48,14 @@ app.use(function(req, res, next){
   var expression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
   var regex = new RegExp(expression);
   //above from https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
-  
-  var isUrl = false;
-  var arr;
-  if(req.originalUrl.match(regex))
-  {
-    console.log("it's a valid url!")
-    isUrl = true;
-    var longUrl = req.originalUrl;
-    MongoClient.connect(url,function(err,db){
-      if(err)
-        console.log("Error: ", err);
-      else
-        console.log("Ding! Connected");
-    });  
-  }
+  MongoClient.connect(url,function(err,db){
+    if(err)
+      console.log("Error: " + err);
+    else
+    {
+      
+    }
+  });  
   
 });
 
