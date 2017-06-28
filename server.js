@@ -64,7 +64,7 @@ app.use(function(req, res, next){
     else
     {
       var shortUrls = db.collection('short-urls');
-      console.log("Length: " + shortUrls.length);
+      var number = function(db,call
       var findOne = function(db,callback)
       {
         shortUrls.findOne({original_url : longUrl},{_id:0},
@@ -112,6 +112,6 @@ function makeShortUrl()
 {
   var date = new Date();
   var year = date.getFullYear().toString().split("");
-  
-  console.log(year);
+  var returnString = year[2]+year[3]+date.getMonth().toString()+date.getDate().toString()+date.getHours().toString()+date.getMinutes().toString()+date.getSeconds().toString();
+  console.log(returnString);
 }
