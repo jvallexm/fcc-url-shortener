@@ -50,11 +50,13 @@ app.route('/')
     .get(function(req, res) {
 		  res.sendFile(process.cwd() + '/views/index.html');
     })
-
-// Respond not found to all the wrong routes
 app.use(function(req, res, next){
-  console.log(req);
-  res.send("puppies");
+  console.log(req.originalUrl);
+  //
+  var expression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
+  
+  
+  res.send(req.originalUrl);
 });
 
 // Error Middleware
