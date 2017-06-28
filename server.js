@@ -67,7 +67,7 @@ app.use(function(req, res, next){
       
       var findOne = function(db,callback)
       {
-        shortUrls.findOne({},{original_url : longUrl},
+        shortUrls.findOne({original_url : longUrl},{_id:0},
                 function(err,data){
                     console.log(data);
                     if(data!=null)
