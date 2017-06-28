@@ -53,10 +53,13 @@ app.use(function(req, res, next){
      console.log("Error: " + err);
     else
     {
-
+       var newLink = function (db, callback) {console.log("ding")};
+        newLink(db, function () {
+          db.close();
+        });
     }
   });  
-  
+  res.send("your super box needs words");
 });
 
 // Error Middleware
