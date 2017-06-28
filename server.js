@@ -55,8 +55,8 @@ app.use(function(req, res, next){
     res.send("Not a valid URL");
     return false;
   }
-  console.log("Url Valid");
-  
+  var longUrl = req.originalUrl;
+  console.log("Url Valid");  
   MongoClient.connect(url,function(err,db){
     if(err)
      console.log("Error: " + err);
@@ -65,12 +65,20 @@ app.use(function(req, res, next){
       var shortUrls = db.collection('short-urls');
       var isNew = function(db,callback)
       {
-        shortUrls.findOne();
+        shortUrls.findOne({"original_url":longUrl},
+                  function(err,doc)
+                  {
+                    if(doc!=null)
+                      {
+                        res.send(doc);
+                      }
+                    else
+                      res.send("Not found");
+                  });
       };
       isNew(db,function(){db.close();});
     }
   });  
-  res.send("your super box needs words");
 });
 
 // Error Middleware
