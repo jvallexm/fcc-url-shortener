@@ -43,13 +43,16 @@ app.route('/')
     })
 
 app.use(function(req, res, next){
+  //console.log(req);
   console.log(req.originalUrl);
   
   //expression from https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
   var expression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
   var regex = new RegExp(expression);
   //above from https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
-  var longUrl = req.originalUrl;
+  
+  var longUrl = req.originalUrl.substr(1);
+  
   console.log("Url Valid");  
   //https://battle-wine.glitch.me/http://www.google.com
   MongoClient.connect(url,function(err,db){
@@ -58,19 +61,18 @@ app.use(function(req, res, next){
       console.log("Error: " + err);
     }
     var shortUrls = db.collection('short-urls');
+    console.log("Shifted URL: "+ longUrl);
     if(!longUrl.match(regex))
-    {
-      if(1==2)
+    { 
+      var shortCheck = function(db,callback)
       {
-         shortU
-        
-      }
-      else
-      {
-         console.log("URL not valid");
-         res.send("Not a valid URL");
-         return false;
-      }
+        shortUrls.findOne({"short_url"},
+                  function(err,data)
+                  {})     
+      }          
+      console.log("URL not valid");
+      res.send("Not a valid URL");
+      return false;
     }
     else
     {
