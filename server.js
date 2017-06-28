@@ -49,41 +49,55 @@ app.use(function(req, res, next){
   var expression = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/;
   var regex = new RegExp(expression);
   //above from https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
-  if(!req.originalUrl.match(regex))
-  {
-    console.log("URl not valid");
-    res.send("Not a valid URL");
-    return false;
-  }
   var longUrl = req.originalUrl;
   console.log("Url Valid");  
   //https://battle-wine.glitch.me/http://www.google.com
   MongoClient.connect(url,function(err,db){
     if(err)
-     console.log("Error: " + err);
+    {
+      console.log("Error: " + err);
+    }
+    var shortUrls = db.collection('short-urls');
+    if(!longUrl.match(regex))
+    {
+      if(1==2)
+      {
+         shortU
+        
+      }
+      else
+      {
+         console.log("URL not valid");
+         res.send("Not a valid URL");
+         return false;
+      }
+    }
     else
     {
-      var shortUrls = db.collection('short-urls');
-      var number = function(db,call
       var findOne = function(db,callback)
       {
         shortUrls.findOne({original_url : longUrl},{_id:0},
                 function(err,data){
                     console.log(data);
                     if(data!=null)
+                    {
+                      console.log("I found it!");
                       res.send(data);
+                    }
                     else
                     {
+                      console.log("Making new entry!");
+                      var shortUrl = makeShortUrl();
                       makeShortUrl();
-                      res.send("Your super box needs words");
-                      
-                     /* shortUrls.insert({
+                      var newEntry = {
                         "original_url": longUrl,
-                        "short_url": makeShortUrl()
-                      },function(err,db){
+                        "short_url": shortUrl
+                      };
+                      res.send(newEntry);
+                      shortUrls.insert(newEntry,function(err,db){
                         if(err) throw err;
-                      });*/
-
+                      });
+                      
                     }
                 });
       }
@@ -113,5 +127,5 @@ function makeShortUrl()
   var date = new Date();
   var year = date.getFullYear().toString().split("");
   var returnString = year[2]+year[3]+date.getMonth().toString()+date.getDate().toString()+date.getHours().toString()+date.getMinutes().toString()+date.getSeconds().toString();
-  console.log(returnString);
+  return returnString;
 }
