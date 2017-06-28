@@ -8,6 +8,19 @@
 var fs = require('fs');
 var express = require('express');
 var app = express();
+var mongodb = require('mongodb');
+var MongoClient = mongodb.MongoClient;
+var url = process.env.MONGOLAB;
+
+  MongoClient.connect(url, function (err, db) {
+  if (err) {
+    console.log('Unable to connect to the mongoDB server. Error:', err);
+  } else {
+    console.log('Connection established to', url);
+
+    db.close();
+  }
+});
 
 if (!process.env.DISABLE_XORIGIN) {
   app.use(function(req, res, next) {
